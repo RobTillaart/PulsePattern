@@ -1,8 +1,9 @@
 //
 //    FILE: PulsePattern.cpp
 //  AUTHOR: Rob dot Tillaart at gmail dot com
-// VERSION: see PULSEPATTERN_LIB_VERSION in .h
-// PURPOSE: PulsePattern library for Arduino
+// VERSION: 0.1.0
+//    DATE: 2012-11-23
+// PURPOSE: Arduino Library to generate repeating pulse patterns
 //
 // HISTORY:
 // 0.0.1 - 2012-11-23 initial version
@@ -13,8 +14,7 @@
 // 0.0.6 - 2015-04-18 completed the state machine
 // 0.0.7 - 2017-07-16 refactor & review
 // 0.0.8 - 2018-12-13 refactor -> remove some warnings
-//
-// Released to the public domain
+// 0.1.0   2020-06-19 #pragma once; remove pre 1.0 support; refactor
 //
 // TODO
 // - fast function iso array to return the next period?
@@ -31,11 +31,7 @@
 
 #include "PulsePattern.h"
 
-#if defined(ARDUINO) && ARDUINO >= 100
 #include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
 
 // Predefined generator (singleton)
 PulsePattern PPGenerator;
@@ -128,4 +124,4 @@ void PulsePattern::setTimer(const uint16_t cc) const
   TIMSK1 = _BV (OCIE1A);    // interrupt on Compare A Match
 }
 
-// END OF FILE
+// -- END OF FILE --
