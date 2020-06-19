@@ -1,18 +1,17 @@
-#ifndef PulsePattern_h
-#define PulsePattern_h
+#pragma once
 //
 //    FILE: PulsePattern.h
 //  AUTHOR: Rob dot Tillaart at gmail dot com
-// PURPOSE: PulsePattern library for Arduino
+// VERSION: 0.1.0
+//    DATE: 2012-11-23
+// PURPOSE: Arduino Library to generate repeating pulse patterns
 //          sends a pulse pattern to a digital pin (continuously)
 // HISTORY: See PulsePattern.cpp
-//
-// Released to the public domain
 //
 
 #include <inttypes.h>
 
-#define PULSEPATTERN_LIB_VERSION "0.0.8"
+#define PULSEPATTERN_LIB_VERSION "0.1.0"
 
 #define NOTINIT -1
 #define STOPPED 0
@@ -55,5 +54,4 @@ private:
 
 extern PulsePattern PPGenerator;
 
-#endif
-// END OF FILE
+// -- END OF FILE --
