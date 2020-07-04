@@ -1,7 +1,7 @@
 //
 //    FILE: PulsePattern.cpp
 //  AUTHOR: Rob dot Tillaart at gmail dot com
-// VERSION: 0.1.0
+// VERSION: 0.1.1
 //    DATE: 2012-11-23
 // PURPOSE: Arduino Library to generate repeating pulse patterns
 //
@@ -15,18 +15,28 @@
 // 0.0.7 - 2017-07-16 refactor & review
 // 0.0.8 - 2018-12-13 refactor -> remove some warnings
 // 0.1.0   2020-06-19 #pragma once; remove pre 1.0 support; refactor
-//
+// 0.1.1   2020-07-04 add continue function, fix spaces.
+
 // TODO
-// - fast function iso array to return the next period?
-//   more adaptive to e.g. sensor values. (investigate)
-// - test PRE 1.0 backwards compatibility
-// - move code to .h file so compiler can inline?
-// - optimize timer code
-// - adjust timing to more accurate values -> setTimer()
-// - worker should be private - how???
-// - test invalid array periods
-// - start en stop index ipv size?
-// - pulsepattern recorder
+/*
+
+###  todo's
+- [x] #error if not an AVR platform ==>  #if defined(Arduino) or so?
+- [x] get tabs and space right
+- [x] #pragma once [done]
+- [x] remove pre 1.00 support
+- [x] add continue function (after stop)
+- [ ] function that fetches new value instead of hard array?
+- [ ] adjust code in setTimer to be more accurate
+- [ ] low level pin commands
+- [ ] test invalid array periods (pre-scan in startup)
+
+
+### example ideas
+- [ ] example pulse pattern recorder
+- [ ] example reading pattern from disk?
+
+*/
 //
 
 #include "PulsePattern.h"
@@ -71,8 +81,15 @@ const uint8_t level, const uint8_t prescaler)
 
 void PulsePattern::start()
 {
-  if (_size == 0) return;         // no pattern
   if (_state == RUNNING) return;  // no restart
+  _cnt = 0;                       // start from begin
+  cont();
+}
+
+void PulsePattern::cont()
+{
+  if (_state == RUNNING) return;  // no continue
+  if (_size == 0) return;         // no pattern
   setTimer(1);                    // start asap
   _state = RUNNING;
 }
@@ -90,8 +107,9 @@ void PulsePattern::worker()
   if (_state != RUNNING) return;
   // set next period & flip signal
   _level = !_level;
-  // direct port faster
+  // direct port much faster
   digitalWrite(_pin, _level);
+
   // TODO: adjustment needed for code overhead when micros?;
   // + 5.2 usec for digitalWrite
   // + 3 usec for settimer call
@@ -107,18 +125,17 @@ void PulsePattern::stopTimer()
   TCCR1B = 0;
 }
 
-// TODO: can be optimized?
 void PulsePattern::setTimer(const uint16_t cc) const
 {
-  TCCR1A = 0;
+  TCCR1A = 0;               // stop timer first
   TCCR1B = 0;
-  TCNT1 = 0;      		      // reset counter
-  OCR1A = cc * 16;	        // compare A register value;
+  TCNT1 = 0;                // reset counter
+  OCR1A = cc * 16;          // compare A register value;
   // * 16 makes max period 4095
   // min period 12?
 
   // 4: CTC mode, top = OCR1A
-  TCCR1A = _BV (COM1A1);  	// clear on compare
+  TCCR1A = _BV (COM1A1);    // clear on compare
   TCCR1B = _BV (WGM12) | _prescaler;
   TIFR1 |= _BV (OCF1A);     // clear interrupt flag
   TIMSK1 = _BV (OCIE1A);    // interrupt on Compare A Match
