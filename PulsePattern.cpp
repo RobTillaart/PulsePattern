@@ -1,7 +1,7 @@
 //
 //    FILE: PulsePattern.cpp
 //  AUTHOR: Rob dot Tillaart at gmail dot com
-// VERSION: 0.1.1
+// VERSION: 0.1.2
 //    DATE: 2012-11-23
 // PURPOSE: Arduino Library to generate repeating pulse patterns
 //
@@ -16,32 +16,11 @@
 // 0.0.8 - 2018-12-13 refactor -> remove some warnings
 // 0.1.0   2020-06-19 #pragma once; remove pre 1.0 support; refactor
 // 0.1.1   2020-07-04 add continue function, fix spaces.
+// 0.1.2   2020-08-07 speed up toggle pin + get/setFactor()
 
-// TODO
-/*
-
-###  todo's
-- [x] #error if not an AVR platform ==>  #if defined(Arduino) or so?
-- [x] get tabs and space right
-- [x] #pragma once [done]
-- [x] remove pre 1.00 support
-- [x] add continue function (after stop)
-- [ ] function that fetches new value instead of hard array?
-- [ ] adjust code in setTimer to be more accurate
-- [ ] low level pin commands
-- [ ] test invalid array periods (pre-scan in startup)
-
-
-### example ideas
-- [ ] example pulse pattern recorder
-- [ ] example reading pattern from disk?
-
-*/
-//
 
 #include "PulsePattern.h"
 
-#include "Arduino.h"
 
 // Predefined generator (singleton)
 PulsePattern PPGenerator;
@@ -77,6 +56,11 @@ const uint8_t level, const uint8_t prescaler)
 
   digitalWrite(_pin, _level);
   _state = STOPPED;
+
+  // fast low level AVR ports
+  uint8_t _pinport   = digitalPinToPort(_pin);
+  _pinout = portOutputRegister(_pinport);
+  _pinbit = digitalPinToBitMask(_pin);
 }
 
 void PulsePattern::start()
@@ -107,15 +91,21 @@ void PulsePattern::worker()
   if (_state != RUNNING) return;
   // set next period & flip signal
   _level = !_level;
+  // digitalWrite(_pin, _level);
   // direct port much faster
-  digitalWrite(_pin, _level);
+  if (_level == 0) *_pinout &= ~_pinbit;
+  else *_pinout |= _pinbit;
 
-  // TODO: adjustment needed for code overhead when micros?;
-  // + 5.2 usec for digitalWrite
-  // + 3 usec for settimer call
-  OCR1A = (_ar[_cnt]) * (F_CPU/1000000L);
+  if (_factor != 4096)
+  {
+    OCR1A = _ar[_cnt] * _factor * (F_CPU/1000000UL) / 4096;
+  }
+  else
+  {
+    OCR1A = _ar[_cnt] * (F_CPU/1000000UL);
+  }
   _cnt++;
-  if (_cnt >= _size) _cnt = 0;  // repeat
+  if (_cnt >= _size) _cnt = 0;  // repeat pattern
 }
 
 // TIMER code based upon - http://www.gammon.com.au/forum/?id=11504

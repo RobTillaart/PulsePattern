@@ -2,7 +2,7 @@
 
 Arduino Library to generate repeating pulse patterns **AVR ONLY**
 
-# Description
+## Description
 
 This is an **experimental** library to generate pulse patterns by means of an Arduino UNO.
 As the library uses **AVR hardware timers** it is definitely **NOT** working for ESP
@@ -19,21 +19,39 @@ https://gammon.com.au/forum/bbshowpost.php?bbtopic_id=123
 
 Use with care.
 
-### Interface
+## Interface
 
 - **PulsePattern()** constructor
 - **init(pin, \*ar, size, level, prescaler)** initializer of the Timer1
 * pin that outputs the pattern
 * array of durations
-* size of the array
+* size (or part) of the array to be used
 * starting level HIGH/LOW
-* prescaler, one of the 5 defines from .h file
+* prescaler, one of the 5 defines from .h file (table below)
+- **setFactor(perc)** percentage = factor to correct timing (relative).
+- **getFactor()** get the internal used factor. Due to rounding it can be slightly different.
 - **stop()** stop the pattern generator
 - **start()** start the pattern generator
 - **cont()** continue the pattern generator from the last stopped place (approx).
 - **isRunning()** status indicator
 - **worker()** must be public otherwise the ISR cannot call it.
 There is some bad understood __vector_11() error when worker() is private.
+
+### Prescaler constants
+
+| Value | Prescaler | Timer1  | notes |
+|:----:|:----|:----|:----:|
+| 0 | NO_CLOCK       | timer off  | |
+| 1 | PRESCALE_1     | clk / 1    | |
+| 2 | PRESCALE_8     | clk / 8    | |
+| 3 | PRESCALE_64    | clk / 64   | |
+| 4 | PRESCALE_256   | clk / 250  | |
+| 5 | PRESCALE_1024  | clk / 1024 | about 1 ms / pulse |
+| 6 | EXT_T1_FALLING | T1 = pin 5 | not tested |
+| 7 | EXT_T2_RISING  |            | not tested |
+
+
+### 
 
 # Operation
 

@@ -5,12 +5,13 @@
 // PURPOSE: records and writes a pattern to serial
 //    DATE: 2020-07-25
 
-//    (c) : MIT
-//
-
 #include "Arduino.h"
 
-uint8_t valueCount = 0;
+uint8_t  pin = 4;
+uint16_t minDuration = 50;
+uint16_t units = 10;
+uint32_t counter = 0;
+uint32_t sum = 0;
 
 void setup()
 {
@@ -20,19 +21,12 @@ void setup()
 
 void loop()
 {
-  uint8_t  pin = 4;
-  uint16_t minDuration = 50;
-  uint16_t units = 10;
   uint32_t duration = recordPulse(pin, units, minDuration);
-
+  sum += duration;
+  counter++;
   Serial.print(duration);
-  Serial.print(", ");
-  valueCount++;
-  if ( valueCount == 15)
-  {
-    Serial.println();
-    valueCount = 0;
-  }
+  Serial.print("\t");
+  Serial.println(sum/counter);
 }
 
 uint32_t recordPulse(uint8_t pin, uint16_t unit, uint16_t minperiod)
@@ -58,7 +52,7 @@ uint32_t recordPulse(uint8_t pin, uint16_t unit, uint16_t minperiod)
     newState = digitalRead(pin);
   }
   state = newState;
-  uint32_t duration = (now - start + unit - 1) / unit * unit;
+  uint32_t duration = (now - start + unit - 1) / unit;
   start = now;
   return duration;
 }
