@@ -1,6 +1,6 @@
 {
   "name": "PulsePattern",
-  "keywords": "Pulse,pattern,repeating",
+  "keywords": "Pulse, pattern, repeat",
   "description": "Library to generate repeating pulse patterns. (uses timer1) AVR only",
   "authors":
   [
@@ -15,7 +15,7 @@
     "type": "git",
     "url": "https://github.com/RobTillaart/PulsePattern.git"
   },
-  "version":"0.1.1",
+  "version":"0.1.2",
   "frameworks": "arduino",
   "platforms": "avr"
 }
