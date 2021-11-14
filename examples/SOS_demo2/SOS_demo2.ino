@@ -3,11 +3,12 @@
 //  AUTHOR: Rob Tillaart
 //    DATE: 2012-11-23
 //
-// PUPROSE: demo of the PulsePattern Library
+// PURPOSE: demo of the PulsePattern Library
 //          uses timer1
 
 
 #include "PulsePattern.h"
+
 
 // a pattern consists of durations of LOW and HIGH periods
 // so the first line of the SOSpattern is
@@ -22,8 +23,10 @@ uint16_t SOSpattern[] =
   500,500,500,500,500,1500
 };
 
+
 uint8_t patternSize = 18;
 uint8_t startLevel = LOW;
+
 
 void setup()
 {
@@ -36,10 +39,14 @@ void setup()
   PPGenerator.start();
 }
 
+
 void loop()
 {
   // dummy code
   Serial.println(millis());
   delay(1000);
 }
+
+
+// -- END OF FILE --
 

@@ -3,9 +3,10 @@
 //  AUTHOR: Rob Tillaart
 //    DATE: 2012-11-23
 //
-// PUPROSE: demo of the PulsePattern Library
+// PURPOSE: demo of the PulsePattern Library
 //          uses timer1
 //
+
 
 #include "PulsePattern.h"
 
@@ -19,8 +20,10 @@ uint16_t pattern[] =
   500, 500, 400, 400, 300, 300, 200, 200, 100, 100
 };
 
+
 uint8_t patternSize = 30;
 uint8_t startLevel = LOW;
+
 
 void setup()
 {
@@ -31,8 +34,13 @@ void setup()
   PPGenerator.start();
 }
 
+
 void loop()
 {
   Serial.println(millis());
   delay(1000);
 }
+
+
+// -- END OF FILE --
+

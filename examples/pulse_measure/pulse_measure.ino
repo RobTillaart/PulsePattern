@@ -9,6 +9,7 @@
 // - generate with one Arduino a pulse of 1000 ms
 // - measure it with this sketch to determine the correction percentage
 
+
 #include "Arduino.h"
 
 // measure pin = A5 on UNO
@@ -78,4 +79,6 @@ uint32_t recordPulse(uint8_t pin, uint16_t unit, uint16_t minperiod)
   return duration;
 }
 
+
 // -- END OF FILE --
+
