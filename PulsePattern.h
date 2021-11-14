@@ -71,4 +71,5 @@ private:
 
 extern PulsePattern PPGenerator;
 
+
 // -- END OF FILE --
