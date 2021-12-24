@@ -1,7 +1,6 @@
 //
 //    FILE: pattern_recorder.ino
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.0
 // PURPOSE: records and writes a pattern to serial
 //    DATE: 2020-07-25
 

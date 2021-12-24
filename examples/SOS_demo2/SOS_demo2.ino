@@ -2,7 +2,6 @@
 //    FILE: SOS_demo2.ino
 //  AUTHOR: Rob Tillaart
 //    DATE: 2012-11-23
-//
 // PURPOSE: demo of the PulsePattern Library
 //          uses timer1
 
@@ -13,7 +12,7 @@
 // a pattern consists of durations of LOW and HIGH periods
 // so the first line of the SOSpattern is
 // 500 units LOW, 500 units HIGH etc
-// for a dutycycle of 50% LOW and HIGH should have equal periods
+// for a duty cycle of 50% LOW and HIGH should have equal periods
 // NOTE max period = 4095.
 //      min period = about 12
 uint16_t SOSpattern[] =

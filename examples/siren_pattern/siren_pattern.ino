@@ -2,10 +2,8 @@
 //    FILE: siren_pattern.ino
 //  AUTHOR: Rob Tillaart
 //    DATE: 2012-11-23
-//
 // PURPOSE: demo of the PulsePattern Library
 //          uses timer1
-//
 
 
 #include "PulsePattern.h"

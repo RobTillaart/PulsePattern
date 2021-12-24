@@ -20,7 +20,7 @@ or other non-AVR processors.
 The library uses timer1 for the timing of the pulses.
 Therefore the class is implemented with a static instance called PPO.
 Still by calling **init()** one can change all parameters of the process.
-One should note that calling init() forces the timer to stop.
+One should note that calling **init()** forces the timer to stop.
 
 The timer code is based upon the website of Nick Gammon which
 holds quite a lot of good solid material (Thanks Nick!).
