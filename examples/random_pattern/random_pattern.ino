@@ -2,10 +2,8 @@
 //    FILE: random_pattern.ino
 //  AUTHOR: Rob Tillaart
 //    DATE: 2020-07-04
-//
 // PURPOSE: demo of the PulsePattern Library
 //          uses timer1
-//
 
 
 #include "PulsePattern.h"

@@ -2,11 +2,9 @@
 //    FILE: pulse_sender.ino
 //  AUTHOR: Rob Tillaart
 //    DATE: 2020-08-08
-//
 // PURPOSE: for calibrating the pulse length
 //          uses timer1
 //
-
 // This sketch sends a test pattern of 1000 ms LOW and 1000 ms HIGH ==> Duty Cycle = 50%
 // From measuring the duration of the pulses one can derive the correction factor to adjust the timing.
 //
