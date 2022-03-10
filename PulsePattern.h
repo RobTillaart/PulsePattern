@@ -19,12 +19,12 @@
 
 #define PULSEPATTERN_LIB_VERSION        (F("0.1.5"))
 
-
+//  RUNNING STATES
 #define NOTINIT                         -1
 #define STOPPED                         0
 #define RUNNING                         1
 
-
+//  PRESCALER CONSTANTS
 #define NO_CLOCK                        0   // timer off
 #define PRESCALE_1                      1
 #define PRESCALE_8                      2
@@ -34,6 +34,8 @@
 #define EXT_T1_FALLING                  6  // external clock
 #define EXT_T2_RISING                   7  // external clock
 
+//  RUNNING MODE
+#define PP_ONCE                         1
 #define PP_CONTINUOUS                   0xFFFFFFFF
 
 
