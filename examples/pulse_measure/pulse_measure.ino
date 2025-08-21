@@ -31,8 +31,8 @@ void setup()
   Serial.begin(115200);
   Serial.println();
   Serial.println(__FILE__);
-  Serial.println("PULSEPATTERN_LIB_VERSION: ");
-  Serial.println(PULSEPATTERN_LIB_VERSION);
+  //  Serial.println("PULSEPATTERN_LIB_VERSION: ");
+  //  Serial.println(PULSEPATTERN_LIB_VERSION);
   Serial.println();
 
   //  wait for pulse edge to start
